@@ -3,6 +3,8 @@ package com.learning.demo.controller;
 import com.learning.demo.entity.Employee;
 import com.learning.demo.repository.EmployeeRepository;
 import com.learning.demo.repository.Exceptions.EmployeeNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +69,10 @@ public class EmployeeController {
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    @GetMapping("/filter")
+    public Page<Employee> filterEmployee(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }
